@@ -7,8 +7,10 @@ const port = 5000;
 
 app.use(cors());
 require('./models/model')
+require('./models/post')
 app.use(express.json());
 app.use(require('./routes/auth'));
+app.use(require('./routes/createpost'));
 
 mongoose.connect(mongoUrl);
 mongoose.connection.on("connected", () => {

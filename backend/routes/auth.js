@@ -28,17 +28,12 @@ router.post("/signup", (req, res) => {
                 password: hashedPassword,
             })
             user.save()
-                .then(user => { res.json({ message: "saved successfully" }) })
+                .then(user => { res.json({ message: "register successfully" }) })
                 .catch(err => {
                     console.log(err);
                 })
         })
     })
-})
-
-router.get("/createPost", requireLogin, (req, res) => {
-    console.log("Hello auth");
-    
 })
 
 router.post("/signin", (req, res) => {
