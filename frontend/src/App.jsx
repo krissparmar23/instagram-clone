@@ -5,6 +5,8 @@ import Signup from "./components/authpages/Signup";
 import Signin from "./components/authpages/Signin";
 import Profile from "./components/pages/Profile";
 import Createpost from "./components/pages/Createpost";
+import { ToastContainer} from 'react-toastify';
+import'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -16,8 +18,8 @@ function App() {
          <Route path="/signin" element={<Signin/>}></Route>
          <Route path="/profile" element={<Profile/>}></Route>
          <Route path="/create-post" element={<Createpost/>}></Route>
-
       </Routes>
+      <ToastContainer theme="dark"/>
     </BrowserRouter>
   );
 }
