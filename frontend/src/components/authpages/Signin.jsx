@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import logo from "../../img/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { HiEye, HiEyeOff } from "react-icons/hi";
+import { LoginContext } from "../../context/Logincontext";
 
 const Signin = () => {
+  const {setUserlogin} = useContext(LoginContext)
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,9 +35,10 @@ const Signin = () => {
         if (data.error) {
           toast.error(data.error);
         } else {
-          toast.success(data.message);
+          toast.success("signed in successfully");
           console.log(data);
           localStorage.setItem("jwt", data);
+          setUserlogin(true);
           navigate("/");
         }
       })

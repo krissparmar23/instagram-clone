@@ -2,15 +2,50 @@ import React, { useState } from "react";
 import logo from "../../img/logo.png";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({login}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const loginstatus = () => {
+    const token = localStorage.getItem("jwt");
+    if (login || token) {
+      return [
+        <>
+          <Link to="/profile">
+            <li className="px-5 py-2 text-[18px] hover:text-blue-500">
+              Profile
+            </li>
+          </Link>
+          <Link to="/create-post">
+            <li className="px-5 py-2 text-[18px] hover:text-blue-500">
+              Create post
+            </li>
+          </Link>
+        </>
+      ];
+    }else{
+       return [
+         <>
+            <Link to="/signup">
+            <li className="px-5 py-2 text-[18px] hover:text-blue-500">
+              SignUp
+            </li>
+          </Link>
+          <Link to="/signin">
+            <li className="px-5 py-2 text-[18px] hover:text-blue-500">
+              SignIn
+            </li>
+          </Link>
+         </>
+       ]
+    }
+  };
+
   return (
-    <nav className="shadow-lg py-5 bg-white">
+    <nav className="shadow-lg py-5 bg-white sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center px-5">
         {/* Logo */}
         <a href="/" className="w-[10%]">
@@ -40,23 +75,13 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <ul
-          
           className={`md:flex md:items-center md:space-x-5 absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent z-10 transition-transform origin-top transform ${
             isOpen ? "scale-y-100" : "scale-y-0"
           } md:scale-y-100`}
         >
-          <Link to="/signup">
-            <li className="px-5 py-2 text-[18px] hover:text-blue-500">SignUp</li>
-          </Link>
-          <Link to="/signin">
-            <li className="px-5 py-2 text-[18px] hover:text-blue-500">SignIn</li>
-          </Link>
-          <Link to="/profile">
-            <li className="px-5 py-2 text-[18px] hover:text-blue-500">Profile</li>
-          </Link>
-          <Link to="/create-post">
-            <li className="px-5 py-2 text-[18px] hover:text-blue-500">Create post</li>
-          </Link>
+          {
+            loginstatus()
+          }
         </ul>
       </div>
     </nav>
