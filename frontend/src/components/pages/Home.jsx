@@ -19,6 +19,56 @@ const Home = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const likePost = (id) => {
+    fetch("http://localhost:5000/like", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        postId: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const newData = data.map((posts) => {
+          if (posts._id == result._id) {
+            return result;
+          } else {
+            return posts;
+          }
+        });
+        setData(newData);
+        console.log(result);
+      });
+  };
+
+  const unlikePost = (id) => {
+    fetch("http://localhost:5000/unlike", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        postId: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const newData = data.map((posts) => {
+          if (posts._id == result._id) {
+            return result;
+          } else {
+            return posts;
+          }
+        });
+        setData(newData);
+        console.log(result);
+      });
+  };
+
   return (
     <div className="home">
       {/* card */}
@@ -34,7 +84,9 @@ const Home = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h5 className="font-bold text-sm sm:text-base">{posts.postedBy.name}</h5>
+              <h5 className="font-bold text-sm sm:text-base">
+                {posts.postedBy.name}
+              </h5>
             </div>
 
             {/* card image */}
@@ -48,10 +100,29 @@ const Home = () => {
 
             {/* card content */}
             <div className="p-4">
-              <span className="material-symbols-outlined text-2xl sm:text-3xl">
-                favorite
-              </span>
-              <p className="mt-2 text-xs sm:text-sm">1 Like</p>
+              {posts.likes.includes(
+                JSON.parse(localStorage.getItem("user"))._id
+              ) ? (
+                <span
+                  className="material-symbols-outlined material-symbols-outlined-red text-2xl sm:text-3xl"
+                  onClick={() => {
+                    unlikePost(posts._id);
+                  }}
+                >
+                  favorite
+                </span>
+              ) : (
+                <span
+                  className="material-symbols-outlined text-2xl sm:text-3xl"
+                  onClick={() => {
+                    likePost(posts._id);
+                  }}
+                >
+                  favorite
+                </span>
+              )}
+
+              <p className="mt-2 text-xs sm:text-sm">{posts.likes.length} Likes</p>
               <p className="text-xs sm:text-sm">{posts.body}</p>
             </div>
 

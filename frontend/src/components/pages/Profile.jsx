@@ -29,7 +29,7 @@ const Profile = () => {
 
         {/* Profile data */}
         <div className="text-left">
-          <h1 className="text-xl font-semibold">Senta</h1>
+          <h1 className="text-xl font-semibold">{JSON.parse(localStorage.getItem("user")).name}</h1>
           <div className="flex space-x-2 mt-2 text-gray-600">
             <span className="font-medium">40 posts</span>
             <span className="font-medium">40 following</span>

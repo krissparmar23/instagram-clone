@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import logo from "../../img/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -6,11 +6,11 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 import { LoginContext } from "../../context/Logincontext";
 
 const Signin = () => {
-  const {setUserlogin} = useContext(LoginContext)
+  const { setUserlogin } = useContext(LoginContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
 
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -37,7 +37,8 @@ const Signin = () => {
         } else {
           toast.success("signed in successfully");
           console.log(data);
-          localStorage.setItem("jwt", data);
+          localStorage.setItem("jwt", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
           setUserlogin(true);
           navigate("/");
         }
@@ -83,19 +84,25 @@ const Signin = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-         
+
           <div
             className="absolute right-3 top-3 cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? <HiEyeOff size={24} className="w-4"/> : <HiEye size={24} className="w-4"/>}
+            {showPassword ? (
+              <HiEyeOff size={24} className="w-4" />
+            ) : (
+              <HiEye size={24} className="w-4" />
+            )}
           </div>
         </div>
         <button
           type="submit"
           id="login-btn"
           className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md w-full hover:bg-blue-600 mt-3"
-          onClick={() => {postData()}}
+          onClick={() => {
+            postData();
+          }}
         >
           Sign In
         </button>
