@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import logo from "../../img/logo.png";
 import { Link } from "react-router-dom";
+import { LoginContext } from "../../context/Logincontext";
 
 const Navbar = ({login}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,6 +9,8 @@ const Navbar = ({login}) => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const { setModalOpen } = useContext(LoginContext);
 
   const loginstatus = () => {
     const token = localStorage.getItem("jwt");
@@ -23,6 +26,11 @@ const Navbar = ({login}) => {
             <li className="px-5 py-2 text-[18px] hover:text-blue-500">
               Create post
             </li>
+          </Link>
+          <Link to={""}>
+            <button className="cursor-pointer font-bold px-6 py-3 text-sm border-none text-white bg-red-600 rounded-xl ml-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-red-300" onClick={()=> {setModalOpen(true)}}>
+              Log Out
+            </button>
           </Link>
         </>
       ];
@@ -75,7 +83,7 @@ const Navbar = ({login}) => {
 
         {/* Navigation Links */}
         <ul
-          className={`md:flex md:items-center md:space-x-5 absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent z-10 transition-transform origin-top transform ${
+          className={`md:flex md:items-center md:space-x-1 absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent z-10 transition-transform origin-top transform ${
             isOpen ? "scale-y-100" : "scale-y-0"
           } md:scale-y-100`}
         >
